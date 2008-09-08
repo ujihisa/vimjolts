@@ -1,0 +1,23 @@
+#!/usr/bin/env ruby
+if ARGV.include? '-h' or ARGV.empty?
+  puts <<-HELP
+
+  VimJolts is a sophisticated package manager for Vim.  This is a
+  basic help message containing pointers to more information.
+
+    Usage:
+      jolt -h/--help
+      jolt -v/--version
+      jolt command [arguments...] [options...]
+
+    Examples:
+      jolt install rake
+      jolt list --local
+      jolt build package.gemspec
+
+    Further information:
+      http://vimjolts.org
+  HELP
+end
+
+puts "***not implemented***"
