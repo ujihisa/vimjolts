@@ -1,3 +1,7 @@
+require 'open-uri'
+require 'rubygems'
+require 'hpricot'
+
 class VimJolts
   Version = '0.0.1'
 end
@@ -46,7 +50,29 @@ Summary:
   end
 
   def self.install(package, *options)
-    p package
-    p options
+    # mock
+    if package != 'metarw'
+      puts 'install not supported except "metarw"'
+      exit
+    end
+
+    vshash = VimJolts::Utility.fetch_recent('2335')
+    p vshash
+  end
+end
+
+class VimJolts::Utility
+  def self.fetch_recent(script_id)
+    fname = "/tmp/jolt#{rand}.zip"
+    h = Hpricot(open("http://www.vim.org/scripts/script.php?script_id=#{script_id}"))
+    script_link = h.at("a[@href^='download_script']")
+    fname = script_link.inner_html
+    {
+      :filename => fname,
+      :packagename => fname[/[^\.]*/][0..-3],
+      :version => fname[/\d\.\d\.\d/],
+      :ext => fname[/\w*$/],
+      :uri => "http://www.vim.org/scripts/" + script_link[:href]
+    }
   end
 end
