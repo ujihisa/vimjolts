@@ -1,5 +1,15 @@
 #!/usr/bin/env ruby
-if ARGV.include? '-h' or ARGV.empty?
+$: << File.dirname(File.expand_path(__FILE__)) + '/../lib'
+require 'jolt'
+
+case ARGV.shift
+when 'help', '-h', '--help'
+  VimJolts::Command.help ARGV.shift
+when '-v', '--version'
+  VimJolts::Command.version
+when 'install'
+  VimJolts::Command.install ARGV.shift
+else
   puts <<-HELP
 
   VimJolts is a sophisticated package manager for Vim.  This is a
@@ -19,5 +29,3 @@ if ARGV.include? '-h' or ARGV.empty?
       http://vimjolts.org
   HELP
 end
-
-puts "***not implemented***"
