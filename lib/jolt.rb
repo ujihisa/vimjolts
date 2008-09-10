@@ -36,9 +36,9 @@ Summary:
       jolt command [arguments...] [options...]
 
     Examples:
-      jolt install rake
+      jolt help install
+      jolt install metarw
       jolt list --local
-      jolt build package.gemspec
 
     Further information:
       http://vimjolts.org
@@ -46,16 +46,25 @@ Summary:
   end
 
   def self.version
-    puts "VimJolts VimJolts::VimJolts"
+    puts "VimJolts #{VimJolts::Version}"
   end
 
   def self.install(package, *options)
     # mock
     if package != 'metarw'
-      puts 'install not supported except "metarw"'
+      puts 'install not supported except "install metarw"'
       exit
     end
 
+    # metarw only
+
+    # check installed or not
+    if File.exist?(File.expand_path('~/.vim/jolts/metarw-0.0.3/'))
+      puts "metarw already installed."
+      exit
+    end
+
+    # fetch
     vshash = VimJolts::Utility.fetch_recent('2335')
     p vshash
   end

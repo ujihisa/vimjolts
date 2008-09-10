@@ -2,30 +2,20 @@
 $: << File.dirname(File.expand_path(__FILE__)) + '/../lib'
 require 'jolt'
 
+unless File.exist?(File.expand_path('~/.vim/jolts'))
+  puts 'mkdir ~/.vim/jolts'
+  system 'mkdir ~/.vim/jolts'
+end
+
 case ARGV.shift
-when 'help', '-h', '--help'
+when 'help'
   VimJolts::Command.help ARGV.shift
 when '-v', '--version'
   VimJolts::Command.version
 when 'install'
   VimJolts::Command.install ARGV.shift
+when '-h', '--help', nil
+  VimJolts::Command.help_default
 else
-  puts <<-HELP
-
-  VimJolts is a sophisticated package manager for Vim.  This is a
-  basic help message containing pointers to more information.
-
-    Usage:
-      jolt -h/--help
-      jolt -v/--version
-      jolt command [arguments...] [options...]
-
-    Examples:
-      jolt install rake
-      jolt list --local
-      jolt build package.gemspec
-
-    Further information:
-      http://vimjolts.org
-  HELP
+  puts 'invalid arguments'
 end
